@@ -1,0 +1,115 @@
+<head>
+  <title>pummelyou</title> 
+</head> 
+
+<body>
+  {{> navigation }} {{> scoresTop }}  
+  <div id="main" class="container">
+  </div> 
+</body> 
+
+<template name="hello">
+{{#if currentUser}}  
+<h1>
+  Hello {{currentUser.profile.name}}!  
+</h1>
+<p>
+  This content was added and you didn't ask to refresh  
+</p>
+{{else}}  
+<h1>
+  Welcome, please sign in above.  
+</h1>
+{{/if}} {{greeting}} <input type="button" class="btn" value="Click"/>
+</template> 
+<template name="navigation">
+<div class="navbar navbar-inverse navbar-static-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="/">Pummel You</a>
+      <ul class="nav">
+        <li class="active">
+          <a href="/match">Match</a>
+        </li>
+      </ul>
+      <div class="pull-right">
+        {{loginButtons align="right" }}  
+      </div> 
+    </div> 
+  </div> 
+</div> 
+</template> 
+<template name="matchPage">
+<ul>
+  {{#each matches}}  
+  <li>
+    <input type="text" {{bind "game"}} />  
+  </li>
+  {{/each}}  
+</ul>
+</template> 
+<template name="scoresTop">
+<div class="container well well-small">
+  <div class="nav nav-toolbar">
+    {{#each match}} <a class="btn btn-mini btn-inverse" href="#scoretab-{{game}}" data-toggle="tab">{{game}}</a>
+    {{/each}}  
+  </div> 
+  <div class="tab-content score-container">
+    <div class="tab-pane active" id="scoretab-net">
+      <ul class="unstyled inline">
+        <li>
+          <div>
+            Mon 06:30 PM  
+          </div> 
+          <div class="pull-left">
+            TEAM 1  
+            <br/>
+            TEAM 2  
+          </div> 
+          <div class="pull-right">
+            400  
+            <br/>
+            150  
+          </div> 
+        </li>
+        <li>
+          <div>
+            Sun 11:00 AM  
+          </div> 
+          <div class="pull-left">
+            ANOTHER  
+            <br/>
+            THE WIN..  
+          </div> 
+          <div class="pull-right">
+            120  
+            <br/>
+            755  
+          </div> 
+        </li>
+      </ul>
+    </div> 
+    <div class="tab-pane" id="scoretab-goal">
+      <ul class="unstyled inline">
+        <li>
+          <div>
+            score box2  
+          </div> 
+          <div class="pull-left">
+            team1  
+            <br/>
+            team2  
+          </div> 
+          <div class="pull-right">
+            400  
+            <br/>
+            150  
+          </div> 
+        </li>
+      </ul>
+    </div> 
+  </div> 
+</div> 
+
+</template> 
+

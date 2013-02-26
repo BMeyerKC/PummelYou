@@ -1,0 +1,21 @@
+.center {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+.score-container {
+  font-size: 10px;
+  color: white;
+}
+.score-container li {
+  background-color: grey;
+  border-radius: 5px;
+
+}
+.rounded-corners {
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  border-radius: 20px;
+}
+
