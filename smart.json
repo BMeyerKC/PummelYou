@@ -1,6 +1,7 @@
 {
   "packages": {
     "handlebar-bind": {},
-    "page-js": {}
+    "page-js": {},
+    "bootstrap-datepicker": {}
   }
 }
