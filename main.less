@@ -1,0 +1,68 @@
+
+.center {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@score-container-background-color: #666;
+.score-font {
+  font-family: helvetica, arial, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  line-height: 10px;
+}
+.score-wrapper {
+  background: #4f4f4f;
+}
+
+.score-toolbar {
+  margin: 0;
+}
+.score-container {
+  font-size: 10px;
+  color: white;
+}
+.score-container li {
+  background: @score-container-background-color;
+  width: 80px;
+  height: 40px;
+  box-shadow: 0 0 6px -1px #111;
+  float: left;
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+  margin-right: 5px;
+  .rounded-corners ( 3px);
+}
+.score-status {
+  float: left;
+  width: 76px;
+  height: 6px;
+  background: @score-container-background-color url(dark_fish_skin/dark_fish_skin.png);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  padding: 3px 2px 6px 2px;
+  margin: 0 0 2px 0;
+  .score-font;
+}
+.score-teams {
+  .score-font;
+  color: #ddd;
+  padding: 0 0 0 2px;
+}
+.score-scores {
+  .score-font;
+  color: #ddd;
+}
+
+
+.rounded-corners (@radius : 5px) {
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -khtml-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+

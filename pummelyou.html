@@ -1,16 +1,14 @@
 <head>
   <title>pummelyou</title> 
-  <link rel="stylesheet" type="text/css" media="screen"
-     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-  <script type="text/javascript"
-     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-    </script>
+  <link rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+  <script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+  </script> 
 </head> 
 
 <body>
   {{> navigation }} {{> scoresTop }}  
   <div id="main" class="container">
-  </div>
+  </div> 
 </body> 
 
 <template name="hello">
@@ -54,47 +52,32 @@
 </ul>
 </template> 
 <template name="scoresTop">
-<div class="container well well-small">
-  <div class="nav nav-toolbar">
+<div class="container well well-small score-wrapper">
+  <div class="nav nav-toolbar score-toolbar">
     {{#each matchGroup}} <a class="btn btn-mini btn-inverse" href="#scoretab-{{game}}" data-toggle="tab">{{game}}</a>
     {{/each}}  
   </div> 
   <div class="tab-content score-container">
     <div class="tab-pane active" id="scoretab-net">
       <ul class="unstyled inline">
+        {{#each matchGroup}} 
         <li>
-          <div>
-            Mon 06:30 PM  
-          </div> 
-          <div class="pull-left">
-            TEAM 1  
-            <br/>
-            TEAM 2  
-          </div> 
-          <div class="pull-right">
-            400  
-            <br/>
-            150  
-          </div> 
-        </li>
-      {{#each matchGroup}}
-        <li>
-          <div>
+          <div class="score-status">
             {{gameTimeShort this}}  
           </div> 
-          <div class="pull-left">
+          <div class="pull-left score-teams">
             ANOTHER  
             <br/>
             THE WIN..  
           </div> 
-          <div class="pull-right">
+          <div class="pull-right score-scores">
             120  
             <br/>
             755  
           </div> 
         </li>
-           {{/each}}
-   </ul>
+        {{/each}} 
+      </ul>
     </div> 
     <div class="tab-pane" id="scoretab-goal">
       <ul class="unstyled inline">
@@ -119,24 +102,25 @@
 </div> 
 </template> 
 <template name="matchCreate">
-<label>Game :</label> <input type="text" {{bind "game"}} />
+<label>Game :</label> <input type="text" {{bind "game"}} /> 
 <br/>
-<label>Game Time :</label>
+<label>Game Time :</label> 
 <div class="input-append datetimepicker">
-    <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text" {{bind "gameTime"}}></input>
-    <span class="add-on">
-      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-      </i>
-    </span>
-  </div>
+  <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text" {{bind "gameTime"}}></input> 
+  <span class="add-on">
+    <i data-time-icon="icon-time" data-date-icon="icon-calendar"> </i>
+  </span> 
+</div> 
 
- <br />
-<label>Home Team Name :</label> <input type="text" {{bind "homeTeam"}} />
-<br />
-<label>Vistor Team Name :</label> <input type="text" {{bind "visitorTeam"}} />
+<br/>
+<label>Home Team Name :</label> <input type="text" {{bind "homeTeam"}} /> 
+<br/>
+<label>Vistor Team Name :</label> <input type="text" {{bind "visitorTeam"}} /> 
 <br/>
 <br/>
-<button {{bindAction "create"}}>Create</button>
-<span>{{foo}}</span>
+<button {{bindAction "create"}}>Create</button> 
+<span>
+  {{foo}}
+</span> 
 </template> 
 
