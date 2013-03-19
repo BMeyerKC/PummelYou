@@ -2,6 +2,7 @@
   "packages": {
     "handlebar-bind": {},
     "page-js": {},
-    "bootstrap-datepicker": {}
+    "bootstrap-datepicker": {},
+    "jquery-ui-bootstrap": {}
   }
 }

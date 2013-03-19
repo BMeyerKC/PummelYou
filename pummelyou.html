@@ -1,126 +1,120 @@
 <head>
-  <title>pummelyou</title> 
-  <link rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-  <script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-  </script> 
-</head> 
+    <title>pummelyou</title>
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript"
+            src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>
+</head>
 
 <body>
-  {{> navigation }} {{> scoresTop }}  
-  <div id="main" class="container">
-  </div> 
-</body> 
+{{> navigation }} {{> scoresTop }}
+<div id="main" class="container">
+</div>
+</body>
 
 <template name="hello">
-{{#if currentUser}}  
-<h1>
-  Hello {{currentUser.profile.name}}!  
-</h1>
-<p>
-  This content was added and you didn't ask to refresh  
-</p>
-{{else}}  
-<h1>
-  Welcome, please sign in above.  
-</h1>
-{{/if}} {{greeting}} <input type="button" class="btn" value="Click"/>
-</template> 
+    {{#if currentUser}}
+    <h1>
+        Hello {{currentUser.profile.name}}!
+        <br/>
+        is this your email {{currentUser.profile.name}}
+    </h1>
+
+    <p>
+        This content was added and you didn't ask to refresh
+    </p>
+    {{else}}
+    <h1>
+        Welcome, please sign in above.
+    </h1>
+    {{/if}} {{greeting}} <input type="button" class="btn" value="Click"/>
+</template>
 <template name="navigation">
-<div class="navbar navbar-inverse navbar-static-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="/">Pummel You</a>
-      <ul class="nav">
-        <li class="active">
-          <a href="/match">Match</a>
-        </li>
-      </ul>
-      <div class="pull-right">
-        {{loginButtons align="right" }}  
-      </div> 
-    </div> 
-  </div> 
-</div> 
-</template> 
+    <div class="navbar navbar-inverse navbar-static-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="/">Pummel You</a>
+                <ul class="nav">
+                    <li class="active">
+                        <a href="/match">Match</a>
+                    </li>
+                </ul>
+                <div class="pull-right">
+                    {{loginButtons align="right" }}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
 <template name="matchPage">
-<ul>
-  {{#each matches}}  
-  <li>
-    <input type="text" {{bind "game"}} />  
-  </li>
-  {{/each}}  
-</ul>
-</template> 
+    <ul>
+        {{#each matches}}
+        <li>
+            <input type="text" {{bind "game"}} />
+        </li>
+        {{/each}}
+    </ul>
+</template>
 <template name="scoresTop">
-<div class="container well well-small score-wrapper">
-  <div class="nav nav-toolbar score-toolbar">
-    {{#each matchGroup}} <a class="btn btn-mini btn-inverse" href="#scoretab-{{game}}" data-toggle="tab">{{game}}</a>
-    {{/each}}  
-  </div> 
-  <div class="tab-content score-container">
-    <div class="tab-pane active" id="scoretab-net">
-      <ul class="unstyled inline">
-        {{#each matchGroup}} 
-        <li>
-          <div class="score-status">
-            {{gameTimeShort this}}  
-          </div> 
-          <div class="pull-left score-teams">
-            ANOTHER  
-            <br/>
-            THE WIN..  
-          </div> 
-          <div class="pull-right score-scores">
-            120  
-            <br/>
-            755  
-          </div> 
-        </li>
-        {{/each}} 
-      </ul>
-    </div> 
-    <div class="tab-pane" id="scoretab-goal">
-      <ul class="unstyled inline">
-        <li>
-          <div>
-            score box2  
-          </div> 
-          <div class="pull-left">
-            team1  
-            <br/>
-            team2  
-          </div> 
-          <div class="pull-right">
-            400  
-            <br/>
-            150  
-          </div> 
-        </li>
-      </ul>
-    </div> 
-  </div> 
-</div> 
-</template> 
+    <div class="container well well-small score-wrapper">
+        <div class="nav nav-toolbar score-toolbar">
+            {{#each matchGroup}} <a class="btn btn-mini btn-inverse" href="#scoretab-{{underscore this}}"
+                                    data-toggle="tab">{{this}}</a>
+            {{/each}}
+        </div>
+        <div class="tab-content score-container">
+            {{#each matchGroup}}
+            <div class="tab-pane" id="scoretab-{{underscore this}}">
+                <ul class="unstyled inline">
+                    {{#each matches this}}
+                    <li>
+                        <a href="/match/{{_id}}">
+                            <div class="score-status">
+                                {{gameStatus this}}
+                            </div>
+                            <div class="pull-left score-teams">
+                                ANOTHER
+                                <br/>
+                                THE WIN..
+                            </div>
+                            <div class="pull-right score-scores">
+                                120
+                                <br/>
+                                755
+                            </div>
+                    </li>
+                    </a>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</template>
 <template name="matchCreate">
-<label>Game :</label> <input type="text" {{bind "game"}} /> 
-<br/>
-<label>Game Time :</label> 
-<div class="input-append datetimepicker">
-  <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text" {{bind "gameTime"}}></input> 
+    <label>Game :</label> <input type="text" {{bind "game"}} data-provide="typeahead" data-source='["Golf","Ping
+    Pong","Frisbee"]'/>
+    <br/>
+    <label>Game Time :</label>
+
+    <div class="input-append datetimepicker">
+        <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text" {{bind "gameTime"}} />
   <span class="add-on">
     <i data-time-icon="icon-time" data-date-icon="icon-calendar"> </i>
-  </span> 
-</div> 
+  </span>
+    </div>
 
-<br/>
-<label>Home Team Name :</label> <input type="text" {{bind "homeTeam"}} /> 
-<br/>
-<label>Vistor Team Name :</label> <input type="text" {{bind "visitorTeam"}} /> 
-<br/>
-<br/>
-<button {{bindAction "create"}}>Create</button> 
+    <br/>
+    <label>Home Team Name :</label> <input type="text" {{bind "homeTeam"}} />
+    <br/>
+    <label>Vistor Team Name :</label> <input type="text" {{bind "visitorTeam"}} />
+    <br/>
+    <br/>
+    <button
+    {{bindAction "create"}}>Create</button>
 <span>
   {{foo}}
-</span> 
+</span>
 </template> 
 

@@ -5,12 +5,10 @@
 
 insecure
 preserve-inputs
-handlebar-bind
-page-js
-bootstrap
 accounts-ui
 accounts-facebook
 accounts-twitter
 accounts-google
 accounts-github
 less
+bootstrap
