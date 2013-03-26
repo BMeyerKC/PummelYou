@@ -1,4 +1,4 @@
-Matches = new Meteor.Collection("matches");
+var Matches = new Meteor.Collection("matches");
 var sayConsole = function (message) {
     console.log(message);
 };
@@ -30,21 +30,31 @@ if (Meteor.isClient) {
         passwordSignupFields: "USERNAME_AND_EMAIL"
     });
 
+    fixBadUnderScoreString = function (badString) {
+        var goodString = badString.replace(/[ ]/g,'_');
+        return goodString;
+    };
+    loadHeader = function () {
 
+    };
     Meteor.subscribe("matches");
     Meteor.startup(function () {
         $(function () {
             // Define Minimongo collections to match server/publish.js.
             //Matches = new Meteor.Collection( "matches" );
             // Define routing
+            var headerViewModel = new HeaderViewModel();
             var defaultController = new DefaultRoute();
-            var matchController = new MatchRoute();
+            matchController = new MatchRoute();
             page("/", defaultController.defaultRoute);
-            page("/match", matchController.allMatches);
+            page("/match", matchController.defaultRoute);
             page("/match/create", matchController.createMatch);
             page("/match/:id", matchController.load, matchController.show);
 
             page();
+            
+            ko.applyBindings(headerViewModel, document.getElementById("scoresTopWrapper"));
+
         });
     });
     //Handlebar Helpers
@@ -56,30 +66,30 @@ if (Meteor.isClient) {
     Template.hello.greeting = function () {
         return "Welcome to pummelyou.";
     };
-    Template.scoresTop.matchGroup = function () {
-        var matches = Matches.find({});
-        var gameTypes = [ ];
-        matches.forEach(function (match) {
-            if (gameTypes.indexOf(match.game) == -1) {
-                gameTypes.push(match.game);
-            }
-        });
-        return gameTypes;
-    };
-    Template.scoresTop.matches = function () {
-        var gameType = this.toString();
-        var matches = Matches.find({"game": gameType });
-        return matches;
-    };
-    Template.scoresTop.helpers({
-        gameStatus: function (match) {
-            if (match.gameTime == null) {
-                return "BAD";
-            }
-            var d = Date.parse(match.gameTime);
-            return d.toString("ddd HH:mm tt");
-        }
-    });
+    //Template.scoresTop.matchGroup = function () {
+    //    var matches = Matches.find({});
+    //    var gameTypes = [ ];
+    //    matches.forEach(function (match) {
+    //        if (gameTypes.indexOf(match.game) == -1) {
+    //            gameTypes.push(match.game);
+    //        }
+    //    });
+    //    return gameTypes;
+    //};
+    //Template.scoresTop.matches = function () {
+    //    var gameType = this.toString();
+    //    var matches = Matches.find({"game": gameType });
+    //    return matches;
+    //};
+    //Template.scoresTop.helpers({
+    //    gameStatus: function (match) {
+    //        if (match.gameTime == null) {
+    //            return "BAD";
+    //        }
+    //        var d = Date.parse(match.gameTime);
+    //        return d.toString("ddd HH:mm tt");
+    //    }
+    //});
     //matchCreate
     Template.matchCreate.rendered = function () {
     };

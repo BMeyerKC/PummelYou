@@ -1,18 +1,52 @@
 <head>
     <title>pummelyou</title>
     <link rel="stylesheet" type="text/css" media="screen"
-          href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+        href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
     <script type="text/javascript"
-            src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+        src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
     </script>
 </head>
 
 <body>
-{{> navigation }} {{> scoresTop }}
-<div id="main" class="container">
-</div>
-</body>
+    <div class="header">
+        {{> navigation }}
+    <div id="scoresTopWrapper">
+        <div class="nav nav-toolbar score-toolbar" data-bind="foreach: scoresTop">
 
+            <a class="btn btn-mini btn-inverse" data-bind="text: name, attr: { href: $root.scoreTab(name) }"
+                data-toggle="tab"></a>
+        </div>
+    </div>
+
+    </div>
+    <div id="main" class="container">
+    </div>
+    <div id="matchCreateModal" class="modal hide fade"
+        role="dialog" aria-labelledby="matchCreateLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h3 id="matchCreateLabel">Create a New Match</h3>
+        </div>
+        <div class="modal-body">
+            <p>Directions on how to set up a match</p>
+            <label>Match Time :</label>
+            <div class="input-append datetimepicker">
+                <input data-format="MM/dd/yyyy HH:mm PP" type="text" />
+                <span class="add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                </span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button id="matchCreateSubmit" class="btn btn-primary" type="button">Create Match</button>
+        </div>
+
+    </div>
+</body>
+<template id="scoresTop" name="scoresTop">
+
+</template>
 <template name="hello">
     {{#if currentUser}}
     <h1>
@@ -41,6 +75,7 @@
                     </li>
                 </ul>
                 <div class="pull-right">
+                    <button class="btn" type="button" onclick="matchController.createMatch()">Create Match</button>
                     {{loginButtons align="right" }}
                 </div>
             </div>
@@ -55,42 +90,6 @@
         </li>
         {{/each}}
     </ul>
-</template>
-<template name="scoresTop">
-    <div class="container well well-small score-wrapper">
-        <div class="nav nav-toolbar score-toolbar">
-            {{#each matchGroup}} <a class="btn btn-mini btn-inverse" href="#scoretab-{{underscore this}}"
-                                    data-toggle="tab">{{this}}</a>
-            {{/each}}
-        </div>
-        <div class="tab-content score-container">
-            {{#each matchGroup}}
-            <div class="tab-pane" id="scoretab-{{underscore this}}">
-                <ul class="unstyled inline">
-                    {{#each matches this}}
-                    <li>
-                        <a href="/match/{{_id}}">
-                            <div class="score-status">
-                                {{gameStatus this}}
-                            </div>
-                            <div class="pull-left score-teams">
-                                ANOTHER
-                                <br/>
-                                THE WIN..
-                            </div>
-                            <div class="pull-right score-scores">
-                                120
-                                <br/>
-                                755
-                            </div>
-                    </li>
-                    </a>
-                    {{/each}}
-                </ul>
-            </div>
-            {{/each}}
-        </div>
-    </div>
 </template>
 <template name="matchCreate">
     <label>Game :</label> <input type="text" {{bind "game"}} data-provide="typeahead" data-source='["Golf","Ping
@@ -116,5 +115,5 @@
 <span>
   {{foo}}
 </span>
-</template> 
+</template>
 
