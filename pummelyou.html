@@ -1,25 +1,39 @@
 <head>
     <title>pummelyou</title>
-    <link rel="stylesheet" type="text/css" media="screen"
-        href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-    <script type="text/javascript"
-        src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-    </script>
 </head>
 
 <body>
     <div class="header">
         {{> navigation }}
     <div id="scoresTopWrapper">
-        <div class="nav nav-toolbar score-toolbar" data-bind="foreach: scoresTop">
+        <div class="nav nav-toolbar score-toolbar" data-bind="foreach: $root">
 
-            <a class="btn btn-mini btn-inverse" data-bind="text: name, attr: { href: $root.scoreTab(name) }"
+            <a class="btn btn-mini btn-inverse" data-bind="text: status"
                 data-toggle="tab"></a>
         </div>
     </div>
 
     </div>
-    <div id="main" class="container">
+    <div id="main">
+        
+        <div class="span4 warning score-wrapper">
+            <h1>a match</h1>
+        </div>
+        <div class="span4 warning score-wrapper">
+            <h1>a match</h1>
+        </div>
+        <div class="span4 warning score-wrapper">
+            <h1>a match</h1>
+        </div>
+        <div class="span4 warning score-wrapper">
+            <h1>a match</h1>
+        </div>
+        <div class="span4 warning score-wrapper">
+            <h1>a match</h1>
+        </div>
+        <div class="span4 warning score-wrapper">
+            <h1>a match</h1>
+        </div>
     </div>
     <div id="matchCreateModal" class="modal hide fade"
         role="dialog" aria-labelledby="matchCreateLabel" aria-hidden="true">
@@ -27,19 +41,29 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
             <h3 id="matchCreateLabel">Create a New Match</h3>
         </div>
-        <div class="modal-body">
+        <div class="modal-form well form-horizontal">
             <p>Directions on how to set up a match</p>
-            <label>Match Time :</label>
-            <div class="input-append datetimepicker">
-                <input data-format="MM/dd/yyyy HH:mm PP" type="text" />
-                <span class="add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-                </span>
+            <div class="control-group">
+                <label class="control-label">Owner :</label>
+                <div class="controls">
+                    <label data-bind="text: newMatch.owner().name()"></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Match Time :</label>
+                <div class="controls">
+                    <div class="input-append" data-bind="datetimepicker: newMatch.startDate()">
+                        <input data-format="MM/dd/yyyy HH:mm PP"  type="text" />
+                        <span class="add-on">
+                            <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button id="matchCreateSubmit" class="btn btn-primary" type="button">Create Match</button>
+            <button id="matchCreateSubmit" class="btn btn-primary" data-bind="click: $root.insertMatch" type="button">Create Match</button>
         </div>
 
     </div>

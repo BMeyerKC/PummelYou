@@ -1,17 +1,31 @@
-var Match = function () {
+var Match = function (data) {
+    //console.log(ko.mapping.toJS(data));
     var self = this;
 
-    self.name = ko.observable("");
-    self.startDate = ko.observable(new Date());
-    self.owner = ko.observable();
+    //self.startDate = ko.observable(data.startDate);
+    ko.mapping.fromJS(data, {}, this);
+    
+    self.status = ko.computed(function () {
+        if (self.startDate == null) {
+            return "BAD";
+        }
+        //var d = Date.parse(self.startDate());
+        //return "whasdfat";
+        return self.startDate().toString("ddd HH:mm tt");
+
+    });
+
+    self.owner = ko.observable(data.owner);
     self.players = ko.observableArray();
 };
 
-var Player = function () {
+var Player = function (data) {
     var self = this;
-
-    self.name = ko.observable("Jack");
+    console.log(data);
+    self._id = ko.observable(data._id);
+    self.name = ko.observable(data.name);
 };
+
 var MatchRoute = function () {
     var self = this;
     // Matches.bindTemplate("matchPage", { liveUpdate: true });
@@ -34,33 +48,42 @@ var MatchRoute = function () {
     };
     self.matches = Matches.find();
     //createMatch
-    self.newMatch = ko.observable();
-    
     self.createMatch = function (query, page) {
         console.log("Match Router - createMatch");
-        
+
+        var matchCreateApp = new MatchCreateApp();
+
         var createModal = $("#matchCreateModal");
+
         ko.cleanNode(createModal);
-        self.newMatch(new Match());
-        ko.applyBindings(self.newMatch, createModal[0]);
-        $("#matchCreateModal").modal();
-        $(".datetimepicker").datetimepicker({
-            language: 'en',
-            pick12HourFormat: true
-        });
+
+        ko.applyBindings(matchCreateApp, createModal[0]);
+        
+        createModal.modal();
     };
 
-    $("#matchCreateSubmit").on("click", function (event) {
-        console.log("make a match");
-        console.log(self.newMatch());
 
-        var newOwner = new Player();
-        newOwner.name(Meteor.user().profile.name);
-        self.newMatch().owner(newOwner);
-        self.newMatch().players.push(new Player());
-        console.log(self.newMatch().owner().name());
+};
+
+var MatchCreateApp = function () {
+    var self = this;
+    
+    self.newMatch = ko.mapping.fromJS(new Match({
+        owner: new Player({
+            _id: Meteor.user()._id
+            , name: Meteor.user().profile.name
+        }),
+        startDate: new Date()
+    }));
+
+
+    self.insertMatch = function () {
+        var m = ko.mapping.toJS(self.newMatch);
+        //this is needed cause fromJS adds it and meteor no like
+        delete m["__ko_mapping__"];
+        Matches.insert(m);
         $("#matchCreateModal").modal("hide");
-    });
+    };
 
 };
 

@@ -43,17 +43,53 @@ if (Meteor.isClient) {
             // Define Minimongo collections to match server/publish.js.
             //Matches = new Meteor.Collection( "matches" );
             // Define routing
-            var headerViewModel = new HeaderViewModel();
+           // var headerViewModel = ko.meteor.find(Matches, {});
+            var headerViewModel = ko.meteor.find(Matches,{},null, HeaderViewModel);
             var defaultController = new DefaultRoute();
-            matchController = new MatchRoute();
+            
+            window.matchController = new MatchRoute();
             page("/", defaultController.defaultRoute);
-            page("/match", matchController.defaultRoute);
-            page("/match/create", matchController.createMatch);
-            page("/match/:id", matchController.load, matchController.show);
+            page("/match", window.matchController.defaultRoute);
+            page("/match/create", window.matchController.createMatch);
+            page("/match/:id", window.matchController.load, window.matchController.show);
 
             page();
             
             ko.applyBindings(headerViewModel, document.getElementById("scoresTopWrapper"));
+
+            //$(".datetimepicker").datetimepicker({
+            //    language: 'en',
+            //    pick12HourFormat: true
+            //});
+
+
+            ko.bindingHandlers.datetimepicker = {
+                init: function (element, valueAccessor, allBindingsAccessor) {
+                    //initialize datepicker with some optional options
+                    //var options = allBindingsAccessor().datepickerOptions || {};
+                    console.log(element);
+                    $(element).datetimepicker({
+                        language: 'en',
+                        pick12HourFormat: true
+                    });
+
+                    //when a user changes the date, update the view model
+                    ko.utils.registerEventHandler(element, "changeDate", function (event) {
+                        var value = valueAccessor();
+                        if (ko.isObservable(value)) {
+                            value(event.date);
+                        }
+                    });
+                },
+                update: function (element, valueAccessor) {
+                    var widget = $(element).data("datetimepicker");
+                    //when the view model is updated, update the widget
+                    if (widget) {
+                        widget.date = ko.utils.unwrapObservable(valueAccessor());
+                        widget.setValue();
+                    }
+                }
+            };
 
         });
     });
